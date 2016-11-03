@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+gem 'selenium-cucumber'
+gem 'capybara'
+gem 'parallel_tests'
+gem 'rubysl-drb'
+gem 'json'

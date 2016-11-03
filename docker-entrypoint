@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+MAIN_PID=-2
+
+# Git clone
+GIT_URL=${GIT_URL:-}
+if [ ! -z ${GIT_URL} ]; then
+   rm -rf /app-tests/*
+   git clone ${GIT_URL} /app-tests
+   GIT_TAG=${GIT_TAG:-}
+   if [ ! -z ${GIT_TAG} ]; then
+      cd /app-tests
+      git checkout ${GIT_TAG}
+   fi
+fi
+
+function main () {
+  load-entrypoint.d
+  exec "$@"
+}
+
+function load-entrypoint.d () {
+  if [ -d /docker-entrypoint.d ]; then
+    for f in /docker-entrypoint.d/*.sh; do
+      [ -f "$f" ] && . "$f"
+    done
+  fi
+}
+
+main "$@"
