@@ -1,0 +1,19 @@
+FROM ruby:2.3-alpine
+
+RUN apk add --no-cache \
+	git \
+	build-base
+
+RUN gem install bundler
+
+COPY Gemfile /
+RUN bundle install
+
+COPY ./app-tests-example /app-tests
+COPY ./docker-entrypoint /docker-entrypoint
+
+WORKDIR /app-tests
+
+ENTRYPOINT ["/docker-entrypoint"]
+
+CMD ["cucumber"]
