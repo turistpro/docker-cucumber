@@ -6,10 +6,11 @@ COPY Gemfile /
 RUN bundle install
 
 COPY ./app-tests-example /app-tests
-COPY ./docker-entrypoint /docker-entrypoint
+COPY ./docker-entrypoint.sh /
+COPY ./docker-entrypoint.d /
 
 WORKDIR /app-tests
 
-ENTRYPOINT ["/docker-entrypoint"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["cucumber"]
